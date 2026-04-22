@@ -12,13 +12,12 @@ canvas.addEventListener("mouseleave", () => {
     alert(`Do NOT Leave. \n Self-Destructing. \n REFRESH TO SAVE YOURSELF`);
      destroy();
      canvas.remove(); 
-     
-     
-  });
+     });
 
-  function delay() {
-
-  }
+     
+ 
+    
+      
 
   function destroy() {
     document.title = "Destroyed :(";

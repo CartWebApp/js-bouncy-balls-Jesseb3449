@@ -6,6 +6,26 @@ const ctx = canvas.getContext('2d');
 const width = canvas.width = window.innerWidth;
 const height = canvas.height = window.innerHeight;
 
+document.body.appendChild(canvas);
+
+canvas.addEventListener("mouseleave", () => {
+    alert(`Do NOT Leave. \n Self-Destructing. \n REFRESH TO SAVE YOURSELF`);
+     destroy();
+     canvas.remove(); 
+     
+     
+  });
+
+  function delay() {
+
+  }
+
+  function destroy() {
+    document.title = "Destroyed :(";
+    const favicon = document.querySelector('link[rel="icon"]');
+    favicon.href = 'download.png';
+    body.remove();
+}
 
 
 function random(min, max) {
@@ -67,6 +87,34 @@ Ball.prototype.collisionDetect = function() {
   }
 }
 
+const beetleImg = new Image();
+beetleImg.src = 'beetle.png'; 
+
+
+function Beetle(x, y, velX, velY, size) {
+  this.x = x;
+  this.y = y;
+  this.velX = velX;
+  this.velY = velY;
+  this.size = size;
+}
+
+
+Beetle.prototype.draw = function() {
+  ctx.drawImage(
+    beetleImg,
+    this.x - this.size,
+    this.y - this.size,
+    this.size * 2,
+    this.size * 2
+  );
+};
+
+
+Beetle.prototype.update = Ball.prototype.update;
+
+
+Beetle.prototype.collisionDetect = Ball.prototype.collisionDetect;
 let balls = [];
 
 while (balls.length < 25) {
@@ -84,21 +132,47 @@ while (balls.length < 25) {
 
   balls.push(ball);
 }
+let beetles = [];
+
+while (beetles.length < 5) {
+  let size = random(20, 30);
+
+  let beetle = new Beetle(
+    random(size, width - size),
+    random(size, height - size),
+    random(-5, 5),
+    random(-5, 5),
+    size
+  );
+
+  beetles.push(beetle);
+}
 
 function loop() {
-  ctx.fillStyle = 'rgba(0, 0, 0, 0.25)';
-  ctx.fillRect(0, 0, width, height);
-
-  for (let i = 0; i < balls.length; i++) {
-    balls[i].draw();
-    balls[i].update();
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.25)';
+    ctx.fillRect(0, 0, width, height);
+  
+    
+    for (let i = 0; i < balls.length; i++) {
+      balls[i].draw();
+      balls[i].update();
+      balls[i].collisionDetect();
+    }
+  
+    
+    for (let i = 0; i < beetles.length; i++) {
+      beetles[i].draw();
+      beetles[i].update();
+      beetles[i].collisionDetect();
+    }
+  
+    requestAnimationFrame(loop);
   }
-
-  requestAnimationFrame(loop);
-
-
-}
 
 loop();
 balls[i].update(); 
 balls[i].collisionDetect();
+beetles[i].update(); 
+beetles[i].collisionDetect();
+
+

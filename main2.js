@@ -11,7 +11,7 @@ document.body.appendChild(canvas);
 canvas.addEventListener("mouseleave", () => {
     alert(`Do NOT Leave. \n Self-Destructing. \n REFRESH TO SAVE YOURSELF`);
      destroy();
-     canvas.remove(); 
+    
      });
 
      
@@ -20,10 +20,11 @@ canvas.addEventListener("mouseleave", () => {
       
 
   function destroy() {
+    canvas.remove(); 
     document.title = "Destroyed :(";
     const favicon = document.querySelector('link[rel="icon"]');
     favicon.href = 'download.png';
-    body.remove();
+    h1.remove();
 }
 
 
